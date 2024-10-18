@@ -1,222 +1,81 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Registration Form</title>
-    <style>
-        body {
-            background-color: lightyellow;
-            font-family: Arial, sans-serif;
-        }
-        form {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-        label {
-            font-weight: bold;
-        }
-        input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"], textarea, select {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        input[type="radio"] {
-            margin-right: 5px;
-        }
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-        }
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-        fieldset {
-            border: none;
-            margin-bottom: 20px;
-        }
-        legend {
-            font-size: 1.2em;
-            margin-bottom: 10px;
-        }
-        .error {
-            color: red;
-            font-size: 12px;
-        }
-    </style>
+    
 </head>
 <body>
     <h2>Student Registration Form</h2>
-    <form id="studentForm" action="/submit" method="POST">
+    <form id="registrationForm" onsubmit="return validateForm()">
         <!-- Personal Information Section -->
-        <fieldset>
-            <legend>Personal Information</legend>
+        
+            <!-- Personal Information Section -->
+            <fieldset>
+                <legend>Personal Information</legend>
+    
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" >
+    
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName">
+    
+                <label>Gender:</label><br>
+                <input type="radio" id="male" name="gender" value="male">
+                <label for="male">Male</label>
+                <input type="radio" id="female" name="gender" value="female">
+                <label for="female">Female</label>
+                <input type="radio" id="other" name="gender" value="other">
+                <label for="other">Other</label><br><br>
+    
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob">
+    
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+    
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone">
+    
+                <label for="address">Address:</label>
+                <textarea id="address" name="address" rows="3"></textarea>
+            </fieldset>
+    
+            <fieldset>
+                <legend>Academic Information</legend>
+    
+                <label for="studentId">Student ID:</label>
+                <input type="text" id="studentId" name="studentId">
+    
+                <label for="course">Course Enrolled:</label>
+                <select id="course" name="course">
+                    <option value="btech">B.Tech</option>
+                    <option value="bsc">B.Sc</option>
+                    <option value="ba">B.A</option>
+                    <option value="mba">MBA</option>
+                    <option value="msc">M.Sc</option>
+                </select>
+    
+                <label for="year">Year of Study:</label>
+                <select id="year" name="year">
+                    <option value="1">1st Year</option>
+                    <option value="2">2nd Year</option>
+                    <option value="3">3rd Year</option>
+                    <option value="4">4th Year</option>
+                </select>
+    
+                <label for="gpa">Current GPA:</label>
+                <input type="number" id="gpa" name="gpa" step="0.01" min="0" max="10">
+            </fieldset>
 
-            <label for="firstName">First Name:</label>
-            <input type="text" id="firstName" name="firstName" required>
-            <span id="firstNameError" class="error"></span>
-
-            <label for="lastName">Last Name:</label>
-            <input type="text" id="lastName" name="lastName" required>
-            <span id="lastNameError" class="error"></span>
-
-            <label>Gender:</label><br>
-            <input type="radio" id="male" name="gender" value="male" required>
-            <label for="male">Male</label>
-            <input type="radio" id="female" name="gender" value="female" required>
-            <label for="female">Female</label>
-            <input type="radio" id="other" name="gender" value="other" required>
-            <label for="other">Other</label><br><br>
-
-            <label for="dob">Date of Birth:</label>
-            <input type="date" id="dob" name="dob" required>
-            <span id="dobError" class="error"></span>
-
-            <label for="fatherName">Father Name:</label>
-            <input type="text" id="fatherName" name="fatherName" required>
-            <span id="fatherNameError" class="error"></span>
-
-            <label for="motherName">Mother Name:</label>
-            <input type="text" id="motherName" name="motherName" required>
-            <span id="motherNameError" class="error"></span>
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <span id="emailError" class="error"></span>
-
-            <label for="phone">Phone Number:</label>
-            <input type="number" id="phone" name="phone" required>
-            <span id="phoneError" class="error"></span>
-
-            <label for="address">Address:</label>
-            <textarea id="address" name="address" rows="3" required></textarea>
-        </fieldset>
-
-        <!-- Academic Information Section -->
-        <fieldset>
-            <legend>Academic Information</legend>
-
-            <label for="studentId">Student ID:</label>
-            <input type="text" id="studentId" name="studentId" required>
-            <span id="studentIdError" class="error"></span>
-
-            <label for="course">Course Enrolled:</label>
-            <select id="course" name="course" required>
-                <option value="btech">B.Tech</option>
-                <option value="bsc">B.Sc</option>
-                <option value="ba">B.A</option>
-                <option value="mba">MBA</option>
-                <option value="msc">M.Sc</option>
-            </select>
-
-            <label for="year">Year of Study:</label>
-            <select id="year" name="year" required>
-                <option value="1">1st Year</option>
-                <option value="2">2nd Year</option>
-                <option value="3">3rd Year</option>
-                <option value="4">4th Year</option>
-            </select>
-
-            <label for="gpa">Current GPA:</label>
-            <input type="number" id="gpa" name="gpa" step="0.01" min="0" max="10">
-            <span id="gpaError" class="error"></span>
-        </fieldset>
+    
 
         <input type="submit" value="Register">
     </form>
+    <script src="app.js"></script>
 
-    <script>
-        document.getElementById("studentForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent the form from submitting
-
-            // Clear previous error messages
-            document.getElementById("firstNameError").innerText = "";
-            document.getElementById("lastNameError").innerText = "";
-            document.getElementById("dobError").innerText = "";
-            document.getElementById("fatherNameError").innerText = "";
-            document.getElementById("motherNameError").innerText = "";
-            document.getElementById("emailError").innerText = "";
-            document.getElementById("phoneError").innerText = "";
-            document.getElementById("gpaError").innerText = "";
-            
-            let isValid = true;
-
-            // First name validation (must be at least 3 characters)
-            const firstName = document.getElementById("firstName").value;
-            if (firstName.length < 3) {
-                document.getElementById("firstNameError").innerText = "First Name must be at least 3 characters long.";
-                isValid = false;
-            }
-
-            // Last name validation (must be at least 3 characters)
-            const lastName = document.getElementById("lastName").value;
-            if (lastName.length < 3) {
-                document.getElementById("lastNameError").innerText = "Last Name must be at least 3 characters long.";
-                isValid = false;
-            }
-
-            // Email validation
-            const email = document.getElementById("email").value;
-            const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-            if (!email.match(emailPattern)) {
-                document.getElementById("emailError").innerText = "Please enter a valid email address.";
-                isValid = false;
-            }
-
-            // Phone validation (must be 10 digits)
-            const phone = document.getElementById("phone").value;
-            if (phone.length !== 10) {
-            document.getElementById("phoneError").innerHTML = "Phone number must be 10 digits long.";
-            isValid = false;
-        }
-            var dobDate = new Date(dob);
-            var today = new Date();
-            var age = today.getFullYear() - dobDate.getFullYear();
-            var month = today.getMonth() - dobDate.getMonth();
-
-            if (month < 0 || (month === 0 && today.getDate() < dobDate.getDate())) {
-                age--;
-            }
-
-            // Validate if age is greater than 100
-            if (age > 100) {
-                dobError.textContent = "Age cannot be more than 100 years.";
-                return false;
-            } else {
-                dobError.textContent = ""; // Clear error message if valid
-            }
-
-
-            // GPA validation (must be between 0 and 10)
-            const gpa = document.getElementById("gpa").value;
-            if (gpa && (gpa < 0 || gpa > 10)) {
-                document.getElementById("gpaError").innerText = "GPA must be between 0 and 10.";
-                isValid = false;
-            }
-
-            if (isValid) {
-                alert("Form submitted successfully!");
-                document.getElementById("studentForm").submit(); // Submit form if valid
-            }
-        });
-    </script>
+   
 </body>
 </html>

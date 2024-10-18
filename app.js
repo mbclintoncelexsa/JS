@@ -1,93 +1,47 @@
-const form = document.querySelector('#form')
-const username = document.querySelector('#username');
-const email = document.querySelector('#email');
-const password = document.querySelector('#password');
-const cpassword = document.querySelector('#cpassword');
-
-form.addEventListener('submit',(e)=>{
-    
-    if(!validateInputs()){
-        e.preventDefault();
+function checkEmptyFieldEntry(fieldId, fieldName, minLength) {
+    var fieldValue = document.getElementById(fieldId).value;
+    if (!fieldValue || fieldValue.length < minLength) {
+        alert("Please enter a valid " + fieldName + ".");
+        document.getElementById(fieldId).focus();
+        return false;
     }
-})
-
-function validateInputs(){
-    const usernameVal = username.value.trim()
-    const emailVal = email.value.trim();
-    const passwordVal = password.value.trim();
-    const cpasswordVal = cpassword.value.trim();
-    let success = true
-
-    if(usernameVal===''){
-        success=false;
-        setError(username,'Username is required')
-    }
-    else{
-        setSuccess(username)
-    }
-
-    if(emailVal===''){
-        success = false;
-        setError(email,'Email is required')
-    }
-    else if(!validateEmail(emailVal)){
-        success = false;
-        setError(email,'Please enter a valid email')
-    }
-    else{
-        setSuccess(email)
-    }
-
-    if(passwordVal === ''){
-        success= false;
-        setError(password,'Password is required')
-    }
-    else if(passwordVal.length<8){
-        success = false;
-        setError(password,'Password must be atleast 8 characters long')
-    }
-    else{
-        setSuccess(password)
-    }
-
-    if(cpasswordVal === ''){
-        success = false;
-        setError(cpassword,'Confirm password is required')
-    }
-    else if(cpasswordVal!==passwordVal){
-        success = false;
-        setError(cpassword,'Password does not match')
-    }
-    else{
-        setSuccess(cpassword)
-    }
-
-    return success;
-
-}
-//element - password, msg- pwd is reqd
-function setError(element,message){
-    const inputGroup = element.parentElement;
-    const errorElement = inputGroup.querySelector('.error')
-
-    errorElement.innerText = message;
-    inputGroup.classList.add('error')
-    inputGroup.classList.remove('success')
+    return true;
 }
 
-function setSuccess(element){
-    const inputGroup = element.parentElement;
-    const errorElement = inputGroup.querySelector('.error')
+function validateForm() {
+    var frm = document.forms['frmLogin'];
 
-    errorElement.innerText = '';
-    inputGroup.classList.add('success')
-    inputGroup.classList.remove('error')
+    // Check for empty fields
+    if (checkEmptyFieldEntry("firstName", "First Name", 1) == false) return false;
+    if (checkEmptyFieldEntry("lastName", "Last Name", 1) == false) return false;
+    if (checkEmptyFieldEntry("gender", "Gender", 1) == false) return false; // Gender will need special handling
+    if (checkEmptyFieldEntry("dob", "Date of Birth", 1) == false) return false;
+    if (checkEmptyFieldEntry("email", "Email Address", 5) == false) return false;
+    if (checkEmptyFieldEntry("phone", "Phone Number", 10) == false) return false;
+    if (checkEmptyFieldEntry("address", "Address", 1) == false) return false;
+    if (checkEmptyFieldEntry("studentId", "Student ID", 1) == false) return false;
+    if (checkEmptyFieldEntry("course", "Course", 1) == false) return false;
+    if (checkEmptyFieldEntry("year", "Year", 1) == false) return false;
+    if (checkEmptyFieldEntry("gpa", "GPA", 1) == false) return false;
+
+    // Additional checks can be added as needed
+    // Example: Check gender
+    var gender = document.querySelector('input[name="gender"]:checked');
+    if (!gender) {
+        alert("Please select your gender.");
+        return false;
+    }
+
+    // Example: Check for maximum length of any specific field (e.g., address)
+    if (frm.address.value.length > 255) {
+        alert("Address cannot exceed 255 characters.");
+        frm.address.focus();
+        return false;
+    }
+
+    // Indicate that JS is enabled (if needed)
+    frm.hdnIsJSEnabled.value = "True";
+
+    alert("Form submitted successfully.");
+    return true;
 }
-
-const validateEmail = (email) => {
-    return String(email)
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-  };
