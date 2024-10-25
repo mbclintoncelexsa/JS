@@ -11,41 +11,68 @@ function checkEmptyFieldEntry(fieldId, fieldName, minLength) {
 // Function to validate the form
 function validateForm() {
     // Get the form fields
-    const firstName = document.getElementById("firstName").value.trim();
-    const lastName = document.getElementById("lastName").value.trim();
+    const firstName = document.getElementById("txtFirstName").value.trim();
+    const lastName = document.getElementById("txtLastName").value.trim();
     const gender = document.querySelector('input[name="gender"]:checked');
-    const dob = document.getElementById("dob").value;
-    const email = document.getElementById("email").value.trim();
+    const dob = document.getElementById("dteDob").value;
+    const email = document.getElementById("txtEmail").value.trim();
     const phone = document.getElementById("phone").value.trim();
-    const address = document.getElementById("address").value.trim();
-    const studentId = document.getElementById("studentId").value.trim();
-    const course = document.getElementById("course").value;
-    const year = document.getElementById("year").value;
+    const address = document.getElementById("txtAddress").value.trim();
+    const studentId = document.getElementById("txtStudentId").value.trim();
+    const course = document.getElementById("ddlCourse").value;
+    const year = document.getElementById("ddlYear").value;
     const gpa = document.getElementById("gpa").value;
 
     // Check if all required fields are filled
     if (!firstName) {
         alert("Please enter your first name.");
-        document.getElementById("firstName").focus();
+        document.getElementById("txtFirstName").focus();
         return false;
     }
     if (!lastName) {
         alert("Please enter your last name.");
-        document.getElementById("lastName").focus();
+        document.getElementById("txtLastName").focus();
         return false;
     }
     if (!gender) {
         alert("Please select your gender.");
         return false;
     }
-    if (!dob) {
-        alert("Please enter your date of birth.");
-        document.getElementById("dob").focus();
+    // Check if DOB is provided
+if (!dob) {
+    alert("Please enter your date of birth.");
+    document.getElementById("dteDob").focus();
+    return false;
+}
+
+    // Check if DOB is in the future
+    const dobDate = new Date(dob);
+    const today = new Date();
+    if (dobDate > today) {
+        alert("Date of birth cannot be in the future.");
+        document.getElementById("dteDob").focus();
         return false;
+    }
+
+
+    {// Calculate age
+    const age = today.getFullYear() - dobDate.getFullYear();
+    const monthDifference = today.getMonth() - dobDate.getMonth();
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < dobDate.getDate())) {
+        age--;
+    }
+
+    // Check if age is less than 16
+    if (age < 16) {
+        alert("You must be at least 16 years old.");
+        document.getElementById("dteDob").focus();
+        return false;
+    }
+
     }
     if (!email || !validateEmail(email)) {
         alert("Please enter a valid email address.");
-        document.getElementById("email").focus();
+        document.getElementById("txtEmail").focus();
         return false;
     }
     if (!phone || !validatePhone(phone)) {
@@ -55,22 +82,24 @@ function validateForm() {
     }
     if (!address) {
         alert("Please enter your address.");
-        document.getElementById("address").focus();
+        document.getElementById("txtAddress").focus();
         return false;
     }
-    if (!studentId) {
-        alert("Please enter your student ID.");
-        document.getElementById("studentId").focus();
+    // Check student ID length and character restrictions
+    if (!studentId || studentId.length < 3 || studentId.length > 10) {
+        alert("Please enter a valid student ID (3 to 10 characters, alphanumeric).");
+        document.getElementById("txtStudentId").focus();
         return false;
-    }
+    }   
+
     if (!course || course === "") {
         alert("Please select your course.");
-        document.getElementById("course").focus();
+        document.getElementById("ddlCourse").focus();
         return false;
     }
     if (!year || year === "") {
         alert("Please select your year of study.");
-        document.getElementById("year").focus();
+        document.getElementById("ddlYear").focus();
         return false;
     }
     if (!gpa || gpa < 0 || gpa > 10) {
@@ -81,6 +110,7 @@ function validateForm() {
 
     alert("Form submitted successfully.");
     return true;
+    
 }
 
 // Email validation function
