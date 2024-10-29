@@ -14,13 +14,13 @@
             <legend>Personal Information</legend>
 
             <label for="firstName">First Name:</label>
-            <input type="text" id="txtFirstName" maxlength="50" minlength="3" pattern="[a-zA-Z]{3,50}" title="enter minimum character 3" name="firstName" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '')" placeholder="Enter your first name" >
+            <input type="text" id="txtFirstName" maxlength="50" title="enter minimum character 3" name="firstName" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '')" placeholder="Enter your first name" >
 
             <label for="lastName">Last Name:</label>
-            <input type="text" id="txtLastName" maxlength="50" minlength="3" name="lastName" pattern="[a-zA-Z]{3,50}" title="enter minimum character 3" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '')" placeholder="Enter your last name" >
+            <input type="text" id="txtLastName" maxlength="50"  name="lastName"  title="enter minimum character 3" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '')" placeholder="Enter your last name" >
 
             <label>Gender:</label><br>
-            <input type="radio" id="male" name="gender" value="male">
+            <input type="radio" id="male" name="gender" value="male">      
             <label for="male">Male</label>
             <input type="radio" id="female" name="gender" value="female">
             <label for="female">Female</label>

@@ -24,13 +24,13 @@ function validateForm() {
     const gpa = document.getElementById("gpa").value;
 
     // Check if all required fields are filled
-    if (!firstName) {
-        alert("Please enter your first name.");
+    if (!firstName || firstName.length < 3 || firstName.length > 50) {
+        alert("Please enter your first name (3 to 50 characters).");
         document.getElementById("txtFirstName").focus();
         return false;
     }
-    if (!lastName) {
-        alert("Please enter your last name.");
+    if (!lastName || lastName.length < 3 || lastName.length > 50) {
+        alert("Please enter your last name  (3 to 50 characters.");
         document.getElementById("txtLastName").focus();
         return false;
     }
