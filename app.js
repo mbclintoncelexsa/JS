@@ -14,23 +14,33 @@ function validateForm() {
     const firstName = document.getElementById("txtFirstName").value.trim();
     const lastName = document.getElementById("txtLastName").value.trim();
     const gender = document.querySelector('input[name="gender"]:checked');
-    const dob = document.getElementById("dteDob").value;
+    const dob = document.getElementById("txtDob").value;
     const email = document.getElementById("txtEmail").value.trim();
-    const phone = document.getElementById("phone").value.trim();
+    const phone = document.getElementById("txtphone").value.trim();
     const address = document.getElementById("txtAddress").value.trim();
     const studentId = document.getElementById("txtStudentId").value.trim();
     const course = document.getElementById("ddlCourse").value;
     const year = document.getElementById("ddlYear").value;
-    const gpa = document.getElementById("gpa").value;
+    const gpa = document.getElementById("gpa").value.trim();
 
     // Check if all required fields are filled
-    if (!firstName || firstName.length < 3 || firstName.length > 50) {
-        alert("Please enter your first name (3 to 50 characters).");
+    if (!firstName) {
+        alert("Please enter your first name");
         document.getElementById("txtFirstName").focus();
         return false;
     }
-    if (!lastName || lastName.length < 3 || lastName.length > 50) {
-        alert("Please enter your last name  (3 to 50 characters.");
+    if (firstName.length < 3 || firstName.length > 50) {
+        alert("First name (3 to 50 characters).");
+        document.getElementById("txtFirstName").focus();
+        return false;
+    }
+    if (!lastName) {
+        alert("Please enter your last name");
+        document.getElementById("txtLastName").focus();
+        return false;
+    }
+    if (lastName.length < 3 || lastName.length > 50) {
+        alert("Last name  (3 to 50 characters.");
         document.getElementById("txtLastName").focus();
         return false;
     }
@@ -41,7 +51,7 @@ function validateForm() {
     // Check if DOB is provided
 if (!dob) {
     alert("Please enter your date of birth.");
-    document.getElementById("dteDob").focus();
+    document.getElementById("txtDob").focus();
     return false;
 }
 
@@ -50,7 +60,7 @@ if (!dob) {
     const today = new Date();
     if (dobDate > today) {
         alert("Date of birth cannot be in the future.");
-        document.getElementById("dteDob").focus();
+        document.getElementById("txtDob").focus();
         return false;
     }
 
@@ -65,7 +75,7 @@ if (!dob) {
     // Check if age is less than 16
     if (age < 16) {
         alert("You must be at least 16 years old.");
-        document.getElementById("dteDob").focus();
+        document.getElementById("txtDob").focus();
         return false;
     }
 
@@ -77,7 +87,7 @@ if (!dob) {
     }
     if (!phone || !validatePhone(phone)) {
         alert("Please enter a valid 10-digit phone number.");
-        document.getElementById("phone").focus();
+        document.getElementById("txtphone").focus();
         return false;
     }
     if (!address) {
@@ -90,7 +100,8 @@ if (!dob) {
         alert("Please enter a valid student ID (3 to 10 characters, alphanumeric).");
         document.getElementById("txtStudentId").focus();
         return false;
-    }   
+    }
+       
 
     if (!course || course === "") {
         alert("Please select your course.");
@@ -102,7 +113,7 @@ if (!dob) {
         document.getElementById("ddlYear").focus();
         return false;
     }
-    if (!gpa || gpa < 0 || gpa > 10) {
+    if  (!gpa || isNaN(gpa) || gpa < 0 || gpa > 10) {
         alert("Please enter a valid GPA between 0 and 10.");
         document.getElementById("gpa").focus();
         return false;
@@ -121,6 +132,15 @@ function validateEmail(email) {
 
 // Phone number validation function (10 digits)
 function validatePhone(phone) {
-    const phonePattern = /^\d{10}$/;
-    return phonePattern.test(phone);
-}
+    if (!/^\d{10}$/.test(phone)) {
+        alert("Please enter a valid 10-digit phone number.");
+        document.getElementById("txtphone").focus();
+        return false;
+    }
+    if (/^(\d)\1{9}$/.test(phone)) {
+        alert("The phone number is invalid (all digits are the same).");
+        document.getElementById("txtphone").focus();
+        return false;
+    }
+    return true;}
+
